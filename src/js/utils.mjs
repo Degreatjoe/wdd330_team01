@@ -7,11 +7,13 @@ export function qs(selector, parent = document) {
 
 // retrieve data from localstorage
 export function getLocalStorage(key) {
-  return JSON.parse(localStorage.getItem(key));
+  return JSON.parse(localStorage.getItem(key)) || [];
 }
 // save data to local storage
 export function setLocalStorage(key, data) {
-  localStorage.setItem(key, JSON.stringify(data));
+  const datalist = getLocalStorage(key);
+  datalist.push(data);
+  localStorage.setItem(key, JSON.stringify(datalist));
 }
 // set a listener for both touchend and click
 export function setClick(selector, callback) {
