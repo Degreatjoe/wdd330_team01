@@ -15,4 +15,5 @@ const cartCount = document.querySelector(".cart-count");
 
 if (cartCount) {
   cartCount.textContent = cartItems.length;
+
 }
