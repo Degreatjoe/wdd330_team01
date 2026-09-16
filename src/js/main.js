@@ -1,10 +1,8 @@
 import { getLocalStorage } from "./utils.mjs";
 import ProductData from "./ProductData.mjs";
 import ProductList from "./productlist.mjs";
-import {loadHeaderFooter} from "./utils.mjs";
+import { loadHeaderFooter } from "./utils.mjs";
 
-
-loadHeaderFooter();
 const dataSource = new ProductData("tents");
 
 const element = document.querySelector(".product-list");
@@ -21,3 +19,4 @@ if (cartCount) {
 
 }
 
+loadHeaderFooter();
