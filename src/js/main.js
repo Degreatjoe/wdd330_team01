@@ -10,4 +10,13 @@ const element = document.querySelector(".product-list");
 const productList = new ProductList("Tents", dataSource, element);
 
 productList.init();
+
+const cartItems = getLocalStorage("so-cart");
+const cartCount = document.querySelector(".cart-count");
+
+if (cartCount) {
+  cartCount.textContent = cartItems.length;
+
+}
+
 loadHeaderFooter();
