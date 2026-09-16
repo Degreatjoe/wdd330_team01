@@ -131,6 +131,14 @@ button {
   fill: gray;
 }
 
+.cart-count {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
 /* End cart icon styles */
 
 .mission {
