@@ -1,65 +1,136 @@
-// wrapper for querySelector...returns matching element
+// wrapper for querySelector
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
 }
-// or a more concise version if you are into that sort of thing:
-// export const qs = (selector, parent = document) => parent.querySelector(selector);
 
-// retrieve data from localstorage
+
+// Get data from localStorage
 export function getLocalStorage(key) {
   return JSON.parse(localStorage.getItem(key)) || [];
 }
-// save data to local storage
+
+
+// Save data to localStorage
 export function setLocalStorage(key, data) {
   const datalist = getLocalStorage(key);
   datalist.push(data);
   localStorage.setItem(key, JSON.stringify(datalist));
 }
-// set a listener for both touchend and click
+
+
+// Set a listener for both touchend and click
 export function setClick(selector, callback) {
-  qs(selector).addEventListener("touchend", (event) => {
+  const element = qs(selector);
+
+  if (!element) {
+    return;
+  }
+
+  element.addEventListener("touchend", (event) => {
     event.preventDefault();
-    callback();
+    callback(event);
   });
-  qs(selector).addEventListener("click", callback);
+
+  element.addEventListener("click", callback);
 }
 
+
+// Get URL parameter
 export function getParam(param) {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   return urlParams.get(param);
 }
 
-export function renderListWithTemplate(template, parentElement, list, position = "afterbegin", clear = false) {
+
+// Render a list using a template
+export function renderListWithTemplate(
+  template,
+  parentElement,
+  list,
+  position = "afterbegin",
+  clear = false
+) {
+  if (!parentElement) {
+    return;
+  }
+
   const htmlStrings = list.map(template);
-  // if clear is true we need to clear out the contents of the parent.
+
   if (clear) {
     parentElement.innerHTML = "";
   }
+
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
 
+
+// Render a template into an element
 export function renderWithTemplate(template, parentElement, data, callback) {
-    // if clear is true we need to clear out the contents of the parent.
+  if (!parentElement) {
+    console.error("renderWithTemplate: parent element was not found.");
+    return;
+  }
+
   parentElement.innerHTML = template;
-  
+
   if (callback) {
     callback(data);
   }
-
 }
 
+
+// Load an HTML template
 export const loadTemplate = async (templatePath) => {
   const response = await fetch(templatePath);
-  const template = await response.text();
-  return template;
-}
 
+  if (!response.ok) {
+    throw new Error(
+      `Could not load ${templatePath}: ${response.status} ${response.statusText}`
+    );
+  }
+
+  return await response.text();
+};
+
+
+// Load header and footer
 export const loadHeaderFooter = async () => {
-  const headerTemplate = await loadTemplate("../partials/header.html");
-  const footerTemplate = await loadTemplate("../partials/footer.html");
   const headerElement = document.querySelector("#main-header");
   const footerElement = document.querySelector("#main-footer");
+
+  // Stop if this page does not have the header/footer
+  if (!headerElement || !footerElement) {
+    console.error("Header or footer element was not found.");
+    return;
+  }
+
+  const headerTemplate = await loadTemplate("../partials/header.html");
+  const footerTemplate = await loadTemplate("../partials/footer.html");
+
   renderWithTemplate(headerTemplate, headerElement);
   renderWithTemplate(footerTemplate, footerElement);
-}
+
+  // Update cart count after the header has been inserted
+  updateCartCount();
+};
+
+
+// Update the number displayed on the cart icon
+export function updateCartCount() {
+  const cartItems = getLocalStorage("so-cart");
+  const cartCount = document.querySelector(".cart-count");
+
+  if (!cartCount) {
+    return;
+  }
+
+  cartCount.textContent = cartItems.length;
+
+  // Hide the number when the cart is empty
+  if (cartItems.length === 0) {
+    cartCount.style.display = "none";
+  } else {
+    cartCount.style.display = "inline-block";
+  }
+};
