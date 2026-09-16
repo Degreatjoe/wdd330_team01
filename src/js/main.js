@@ -18,9 +18,6 @@ const cartCount = document.querySelector(".cart-count");
 
 if (cartCount) {
   cartCount.textContent = cartItems.length;
-<<<<<<< HEAD
 
 }
-=======
-}
->>>>>>> 1c9edb517b9eae56f6685c4f42fa09066d2a2dc8
+
