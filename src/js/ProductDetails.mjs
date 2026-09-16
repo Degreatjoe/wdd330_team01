@@ -10,6 +10,21 @@ export default class ProductDetails {
   async init() {
     // Get the product
     const product = await this.dataSource.findProductById(this.productId);
+    const sortedProducts = sortedProducts(
+      product,
+      sortElement.value
+    );
+
+    productList.renderList(sortedProducts);
+
+    sortElement.addEventListener("change", () => {
+      const sortedProducts = sortedProducts(
+        product,
+        sortElement.value
+      );
+
+      productList.renderList(sortedProducts);
+    });
 
     // Check if the product was found
     if (!product) {
