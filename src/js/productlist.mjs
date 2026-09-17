@@ -55,7 +55,6 @@ export default class ProductList {
         list.sort((a, b) => b.Name.localeCompare(a.Name));
         break;
       }
-    renderListWithTemplate(productCardTemplate, this.listElement, list, "afterbegin", true);
   }
 
 }
