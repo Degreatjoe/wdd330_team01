@@ -37,7 +37,7 @@ export default class ProductList {
 
   }
   sortList(list){
-    const sortby = document.getElementById('sort');
+    const sortby = document.getElementById("sort");
     switch (sortby.value) {
       case "price-asc":
         list.sort((a, b) => a.FinalPrice - b.FinalPrice);
