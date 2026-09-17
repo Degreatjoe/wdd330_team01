@@ -16,6 +16,10 @@ if (element) {
   );
 
   productList.init();
+  document.querySelector('#sort').addEventListener('change', (event) =>{
+  productList.init();
+  console.log(productList)
+});
 }
 
 
