@@ -12,7 +12,7 @@ if (element) {
 
   productList.init();
   document.querySelector("#sort").addEventListener("change", () => {
-    productList.init();
+    productList.renderList(true);
   });
 }
 
