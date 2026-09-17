@@ -19,40 +19,41 @@ export default class ProductList {
     this.category = category;
     this.dataSource = dataSource;
     this.listElement = listElement;
+    this.list = [];
   }
 
   async init() {
-    const list = await this.dataSource.getData();
+    this.list = await this.dataSource.getData();
     
-    this.renderList(list);
+    this.renderList();
     
   }
 
-  renderList(list) {
+  renderList(clear=false) {
     // const htmlStrings = list.map(productCardTemplate);
     // this.listElement.insertAdjacentHTML("afterbegin", htmlStrings.join(""));
-    this.sortList(list);
+    this.sortList();
     // apply use new utility function instead of the commented code above
-    renderListWithTemplate(productCardTemplate, this.listElement, list, "afterbegin", true);
+    renderListWithTemplate(productCardTemplate, this.listElement, this.list, "afterbegin", clear);
 
   }
   sortList(list){
     const sortby = document.getElementById("sort");
     switch (sortby.value) {
       case "price-asc":
-        list.sort((a, b) => a.FinalPrice - b.FinalPrice);
+        this.list.sort((a, b) => a.FinalPrice - b.FinalPrice);
         break;
 
       case "price-desc":
-        list.sort((a, b) => b.FinalPrice - a.FinalPrice);
+        this.list.sort((a, b) => b.FinalPrice - a.FinalPrice);
         break;
 
       case "name-asc":
-        list.sort((a, b) => a.Name.localeCompare(b.Name));
+        this.list.sort((a, b) => a.Name.localeCompare(b.Name));
         break;
 
       case "name-desc":
-        list.sort((a, b) => b.Name.localeCompare(a.Name));
+        this.list.sort((a, b) => b.Name.localeCompare(a.Name));
         break;
       }
   }
