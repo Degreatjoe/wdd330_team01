@@ -35,6 +35,18 @@ export default class ProductDetails {
 
     // Update the cart number immediately
     updateCartCount();
+
+      // Animate the cart icon
+    const cart = document.querySelector(".cart");
+
+    if (cart) {
+      cart.classList.remove("cart-animation");
+
+    // Force the browser to restart the animation
+      void cart.offsetWidth;
+
+      cart.classList.add("cart-animation");
+    }
   }
 
   // Render the product details to the page

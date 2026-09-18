@@ -284,3 +284,29 @@ footer {
   outline: none;
   border-color: #333;
 }
+
+.cart-animation {
+  animation: cartBounce 0.5s ease;
+}
+
+@keyframes cartBounce {
+  0% {
+    transform: scale(1);
+  }
+
+  30% {
+    transform: scale(1.2);
+  }
+
+  50% {
+    transform: scale(0.9);
+  }
+
+  70% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
