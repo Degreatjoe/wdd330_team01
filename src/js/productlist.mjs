@@ -1,17 +1,21 @@
 import { renderListWithTemplate } from "./utils.mjs";
 
-
 function productCardTemplate(product) {
   return `
     <li class="product-card">
-      <a href="product_pages/?products=${product.Id}">
-        <img src="${product.Image}" alt="${product.Name}">
+      <a href="/product_pages/?products=${product.Id}">
+        <img
+          src="${product.PrimaryMedium}"
+          alt="${product.Name}"
+        >
         <h2>${product.Brand.Name}</h2>
         <h3>${product.Name}</h3>
-        <p class="product-card__price">$${product.FinalPrice}</p>
+        <p class="product-card__price">
+          $${product.FinalPrice}
+        </p>
       </a>
     </li>
-    `;
+  `;
 }
 
 export default class ProductList {
@@ -23,39 +27,54 @@ export default class ProductList {
   }
 
   async init() {
-    this.list = await this.dataSource.getData();
-    
+    this.list = await this.dataSource.getData(this.category);
+
     this.renderList();
-    
   }
 
-  renderList(clear=false) {
-    // const htmlStrings = list.map(productCardTemplate);
-    // this.listElement.insertAdjacentHTML("afterbegin", htmlStrings.join(""));
+  renderList(clear = false) {
     this.sortList();
-    // apply use new utility function instead of the commented code above
-    renderListWithTemplate(productCardTemplate, this.listElement, this.list, "afterbegin", clear);
 
+    renderListWithTemplate(
+      productCardTemplate,
+      this.listElement,
+      this.list,
+      "afterbegin",
+      clear
+    );
   }
-  sortList(list){
-    const sortby = document.getElementById("sort");
-    switch (sortby.value) {
+
+  sortList() {
+    const sortBy = document.getElementById("sort");
+
+    if (!sortBy) {
+      return;
+    }
+
+    switch (sortBy.value) {
       case "price-asc":
-        this.list.sort((a, b) => a.FinalPrice - b.FinalPrice);
+        this.list.sort(
+          (a, b) => a.FinalPrice - b.FinalPrice
+        );
         break;
 
       case "price-desc":
-        this.list.sort((a, b) => b.FinalPrice - a.FinalPrice);
+        this.list.sort(
+          (a, b) => b.FinalPrice - a.FinalPrice
+        );
         break;
 
       case "name-asc":
-        this.list.sort((a, b) => a.Name.localeCompare(b.Name));
+        this.list.sort(
+          (a, b) => a.Name.localeCompare(b.Name)
+        );
         break;
 
       case "name-desc":
-        this.list.sort((a, b) => b.Name.localeCompare(a.Name));
+        this.list.sort(
+          (a, b) => b.Name.localeCompare(a.Name)
+        );
         break;
-      }
+    }
   }
-
 }
