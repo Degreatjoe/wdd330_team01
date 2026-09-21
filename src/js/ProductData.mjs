@@ -30,6 +30,10 @@ export default class ProductData {
 
     const data = await convertToJson(response);
 
+   
+
+
+
     console.log("API data:", data);
 
     return data.Result;
@@ -41,5 +45,6 @@ export default class ProductData {
     const response = await fetch(url);
 
     return convertToJson(response);
+
   }
 }
