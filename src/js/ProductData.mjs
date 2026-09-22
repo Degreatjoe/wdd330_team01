@@ -1,23 +1,50 @@
+const baseURL = import.meta.env.VITE_SERVER_URL;
+
+
+
+
 function convertToJson(res) {
   if (res.ok) {
     return res.json();
   } else {
-    throw new Error("Bad Response");
+    throw new Error(
+      `Bad Response: ${res.status} ${res.statusText}`
+    );
   }
 }
 
 export default class ProductData {
-  constructor(category) {
-    this.category = category;
-    this.path = `../json/${this.category}.json`;
+  async getData(category) {
+    const url = `${baseURL}products/search/${category}`;
+
+    console.log("API URL:", url);
+
+    const response = await fetch(url);
+
+    console.log("Response status:", response.status);
+    console.log("Response URL:", response.url);
+    console.log(
+      "Response content type:",
+      response.headers.get("content-type")
+    );
+
+    const data = await convertToJson(response);
+
+   
+
+
+
+    console.log("API data:", data);
+
+    return data.Result;
   }
-  getData() {
-    return fetch(this.path)
-      .then(convertToJson)
-      .then((data) => data);
-  }
+
   async findProductById(id) {
-    const products = await this.getData();
-    return products.find((item) => item.Id === id);
+    const url = `${baseURL}product/${id}`;
+
+    const response = await fetch(url);
+
+    return convertToJson(response);
+
   }
 }
