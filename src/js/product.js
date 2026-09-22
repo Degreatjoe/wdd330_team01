@@ -1,11 +1,31 @@
-import { getParam, loadHeaderFooter } from "./utils.mjs";
+import {
+  getParam,
+  loadHeaderFooter
+} from "./utils.mjs";
+
 import ProductData from "./ProductData.mjs";
 import ProductDetails from "./ProductDetails.mjs";
 
-const productId = getParam("products");
-loadHeaderFooter();
+async function init() {
+  await loadHeaderFooter();
 
-const dataSource = new ProductData("tents");
+  const productId = getParam("products");
 
-const product = new ProductDetails(productId, dataSource);
-product.init();
+  if (!productId) {
+    console.error(
+      "Product ID was not found in the URL."
+    );
+    return;
+  }
+
+  const dataSource = new ProductData();
+
+  const product = new ProductDetails(
+    productId,
+    dataSource
+  );
+
+  await product.init();
+}
+
+init();

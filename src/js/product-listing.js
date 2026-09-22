@@ -8,16 +8,20 @@ import {
 async function init() {
   await loadHeaderFooter();
 
-  const category = getParam("category");
+  const category = getParam("category") || "all";
 
   console.log("Category:", category);
 
   const dataSource = new ProductData();
 
-  const listElement = document.querySelector(".product-list");
+  const listElement = document.querySelector(
+    ".product-list"
+  );
 
   if (!listElement) {
-    console.error("Product list element was not found.");
+    console.error(
+      "Product list element was not found."
+    );
     return;
   }
 
@@ -41,15 +45,24 @@ async function init() {
 }
 
 function updateListingTitle(category) {
-  const title = document.querySelector("#listing-title");
+  const title = document.querySelector(
+    "#listing-title"
+  );
 
-  if (!title || !category) {
+  if (!title) {
+    return;
+  }
+
+  if (category === "all") {
+    title.textContent = "All Outdoor Products";
     return;
   }
 
   const formattedCategory = category
     .replace(/-/g, " ")
-    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+    .replace(/\b\w/g, (letter) =>
+      letter.toUpperCase()
+    );
 
   title.textContent = `Top Products: ${formattedCategory}`;
 }
