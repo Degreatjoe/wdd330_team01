@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
+
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0"
@@ -29,30 +30,38 @@
       <section class="products">
 
         <h1 id="listing-title">
-          Top Products
+          All Outdoor Products
         </h1>
 
-        <select id="sort">
-          <option value="default">
-            Sort By
-          </option>
+        <div class="inventory-controls">
 
-          <option value="price-asc">
-            Price: Low to High
-          </option>
+          <label for="sort">
+            Sort by:
+          </label>
 
-          <option value="price-desc">
-            Price: High to Low
-          </option>
+          <select id="sort">
+            <option value="default">
+              Default
+            </option>
 
-          <option value="name-asc">
-            Name: A-Z
-          </option>
+            <option value="price-asc">
+              Price: Low to High
+            </option>
 
-          <option value="name-desc">
-            Name: Z-A
-          </option>
-        </select>
+            <option value="price-desc">
+              Price: High to Low
+            </option>
+
+            <option value="name-asc">
+              Name: A-Z
+            </option>
+
+            <option value="name-desc">
+              Name: Z-A
+            </option>
+          </select>
+
+        </div>
 
         <ul class="product-list"></ul>
 

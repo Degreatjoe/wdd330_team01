@@ -4,20 +4,23 @@ function productCardTemplate(product) {
   return `
     <li class="product-card">
       <a href="/product_pages/?products=${product.Id}">
-     <img
-  src="${product.PrimaryMedium}"
-  srcset="
-    ${product.PrimarySmall} 400w,
-    ${product.PrimaryMedium} 800w,
-    ${product.PrimaryLarge} 1200w
-  "
-  sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw"
-  alt="${product.Name}"
->
-        <h2>${product.Brand.Name}</h2>
+        <img
+          src="${product.PrimaryMedium}"
+          srcset="
+            ${product.PrimarySmall} 400w,
+            ${product.PrimaryMedium} 800w,
+            ${product.PrimaryLarge} 1200w
+          "
+          sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw"
+          alt="${product.Name}"
+        >
+
+        <h2>${product.Brand?.Name ?? ""}</h2>
+
         <h3>${product.Name}</h3>
+
         <p class="product-card__price">
-          $${product.FinalPrice}
+          $${Number(product.FinalPrice).toFixed(2)}
         </p>
       </a>
     </li>
@@ -33,9 +36,15 @@ export default class ProductList {
   }
 
   async init() {
-    this.list = await this.dataSource.getData(this.category);
+    if (this.category === "all") {
+      this.list = await this.dataSource.getAllData();
+    } else {
+      this.list = await this.dataSource.getData(
+        this.category
+      );
+    }
 
-    this.renderList();
+    this.renderList(true);
   }
 
   renderList(clear = false) {

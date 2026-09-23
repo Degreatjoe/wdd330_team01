@@ -1,30 +1,43 @@
-import { getLocalStorage, loadHeaderFooter } from "./utils.mjs";
+import {
+  getLocalStorage,
+  loadHeaderFooter
+} from "./utils.mjs";
 
 async function renderCartContents() {
-  const cartItems = getLocalStorage("so-cart");
-  const productList = document.querySelector(".product-list");
+  const cartItems =
+    getLocalStorage("so-cart");
+
+  const productList =
+    document.querySelector(".product-list");
 
   if (!productList) {
     return;
   }
 
-  if (!cartItems || cartItems.length === 0) {
-    productList.innerHTML = "<p>Your cart is empty.</p>";
+  if (cartItems.length === 0) {
+    productList.innerHTML =
+      "<p>Your cart is empty.</p>";
+
     return;
   }
 
-  const htmlItems = cartItems.map((item) => cartItemTemplate(item));
+  const htmlItems =
+    cartItems.map(cartItemTemplate);
 
-  productList.innerHTML = htmlItems.join("");
+  productList.innerHTML =
+    htmlItems.join("");
 }
 
 function cartItemTemplate(item) {
   return `
     <li class="cart-card divider">
 
-      <a href="#" class="cart-card__image">
+      <a
+        href="#"
+        class="cart-card__image"
+      >
         <img
-          src="${item.Image}"
+          src="${item.PrimaryMedium || item.Image}"
           alt="${item.Name}"
         />
       </a>
@@ -36,7 +49,8 @@ function cartItemTemplate(item) {
       </a>
 
       <p class="cart-card__color">
-        ${item.Colors[0].ColorName}
+        Color:
+        ${item.Colors?.[0]?.ColorName ?? "N/A"}
       </p>
 
       <p class="cart-card__quantity">
@@ -44,7 +58,7 @@ function cartItemTemplate(item) {
       </p>
 
       <p class="cart-card__price">
-        $${item.FinalPrice}
+        $${Number(item.FinalPrice).toFixed(2)}
       </p>
 
     </li>
@@ -53,6 +67,7 @@ function cartItemTemplate(item) {
 
 async function init() {
   await loadHeaderFooter();
+
   renderCartContents();
 }
 
