@@ -3,6 +3,7 @@ import { getLocalStorage, loadHeaderFooter } from "./utils.mjs";
 async function renderCartContents() {
   const cartItems = getLocalStorage("so-cart");
   const productList = document.querySelector(".product-list");
+  const cartTotal = document.querySelector(".cart-total");
 
   if (!productList) {
     return;
@@ -16,6 +17,14 @@ async function renderCartContents() {
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
 
   productList.innerHTML = htmlItems.join("");
+
+  const total = cartItems.reduce((sum, item) => {
+    return sum + Number(item.FinalPrice);
+  }, 0);
+
+  if (cartTotal) {
+    cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+  }
 }
 
 function cartItemTemplate(item) {
