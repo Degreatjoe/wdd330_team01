@@ -10,7 +10,7 @@ function convertToJson(res) {
   );
 }
 
-export default class ProductData {
+export default class ExternalServices {
   async getData(category) {
     const url = `${baseURL}products/search/${category}`;
 
@@ -19,15 +19,8 @@ export default class ProductData {
     const response = await fetch(url);
 
     console.log("Response status:", response.status);
-    console.log("Response URL:", response.url);
-    console.log(
-      "Response content type:",
-      response.headers.get("content-type")
-    );
 
     const data = await convertToJson(response);
-
-    console.log("API data:", data);
 
     return data.Result ?? [];
   }
@@ -50,19 +43,26 @@ export default class ProductData {
   async findProductById(id) {
     const url = `${baseURL}product/${id}`;
 
-    console.log("Product URL:", url);
-
     const response = await fetch(url);
-
-    console.log(
-      "Product response status:",
-      response.status
-    );
 
     const data = await convertToJson(response);
 
-    console.log("Product data:", data);
-
     return data.Result ?? data;
+  }
+
+  async checkout(payload) {
+    const url = `${baseURL}checkout`;
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    };
+
+    const response = await fetch(url, options);
+
+    return convertToJson(response);
   }
 }

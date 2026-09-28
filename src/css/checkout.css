@@ -1,0 +1,341 @@
+/* =========================================================
+   CHECKOUT PAGE
+   ========================================================= */
+
+main.divider {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+}
+
+/* ---------------------------------------------------------
+   Page Heading
+   --------------------------------------------------------- */
+
+main.divider > .products {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+main.divider > .products h1 {
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1.2;
+  color: #222;
+  font-weight: 700;
+}
+
+main.divider > .products h1::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  margin: 0.8rem auto 0;
+  border-radius: 10px;
+  background: #222;
+}
+
+/* ---------------------------------------------------------
+   Checkout Layout
+   --------------------------------------------------------- */
+
+#checkout-form {
+  max-width: 760px;
+  margin: 0 auto 2rem;
+}
+
+/* ---------------------------------------------------------
+   Fieldsets
+   --------------------------------------------------------- */
+
+#checkout-form fieldset {
+  margin: 0 0 1.5rem;
+  padding: 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+#checkout-form legend {
+  padding: 0 0.75rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #333;
+}
+
+/* ---------------------------------------------------------
+   Labels
+   --------------------------------------------------------- */
+
+#checkout-form label {
+  display: block;
+  margin: 1rem 0 0.4rem;
+  color: #333;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+#checkout-form label:first-of-type {
+  margin-top: 0.25rem;
+}
+
+/* ---------------------------------------------------------
+   Inputs
+   --------------------------------------------------------- */
+
+#checkout-form input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 48px;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fafafa;
+  color: #222;
+  font-size: 1rem;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+#checkout-form input:hover {
+  border-color: #999;
+}
+
+#checkout-form input:focus {
+  border-color: #222;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(34, 34, 34, 0.1);
+}
+
+/* Placeholder */
+
+#checkout-form input::placeholder {
+  color: #999;
+}
+
+/* ---------------------------------------------------------
+   Required Field Validation
+   --------------------------------------------------------- */
+
+#checkout-form input:invalid:not(:placeholder-shown) {
+  border-color: #c0392b;
+}
+
+#checkout-form input:valid {
+  border-color: #ccc;
+}
+
+/* ---------------------------------------------------------
+   Checkout Button
+   --------------------------------------------------------- */
+
+#checkout-form button {
+  display: block;
+  width: 100%;
+  min-height: 52px;
+  margin-top: 0.5rem;
+  padding: 0.85rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  background: #222;
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+#checkout-form button:hover {
+  background: #444;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+#checkout-form button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* ---------------------------------------------------------
+   Order Summary
+   --------------------------------------------------------- */
+
+.order-summary {
+  max-width: 760px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background: #f8f8f8;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.order-summary h2 {
+  margin: 0 0 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #ddd;
+  font-size: 1.4rem;
+  color: #222;
+}
+
+.order-summary p {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin: 0;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid #e5e5e5;
+  color: #555;
+  font-size: 1rem;
+}
+
+.order-summary p:last-child {
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  border-bottom: none;
+  color: #222;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.order-summary span,
+.order-summary strong {
+  color: #222;
+  font-weight: 700;
+}
+
+#order-total {
+  font-size: 1.3rem;
+}
+
+/* ---------------------------------------------------------
+   Checkout Message
+   --------------------------------------------------------- */
+
+#checkout-message {
+  max-width: 760px;
+  margin: 1.5rem auto;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------
+   Desktop Form Layout
+   --------------------------------------------------------- */
+
+@media screen and (min-width: 700px) {
+  #checkout-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  #checkout-form fieldset {
+    margin: 0;
+  }
+
+  /* Customer Information spans the width */
+  #checkout-form fieldset:first-child {
+    grid-column: 1 / -1;
+  }
+
+  /* Address */
+  #checkout-form fieldset:nth-child(2) {
+    grid-column: 1 / -1;
+  }
+
+  /* Payment */
+  #checkout-form fieldset:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+
+  #checkout-form button {
+    grid-column: 1 / -1;
+  }
+
+  .order-summary {
+    padding: 2rem;
+  }
+}
+
+/* ---------------------------------------------------------
+   Large Desktop
+   --------------------------------------------------------- */
+
+@media screen and (min-width: 1000px) {
+  main.divider {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  main.divider > .products h1 {
+    font-size: 2.4rem;
+  }
+
+  #checkout-form fieldset {
+    padding: 2rem;
+  }
+
+  .order-summary {
+    max-width: 760px;
+  }
+}
+
+/* ---------------------------------------------------------
+   Mobile
+   --------------------------------------------------------- */
+
+@media screen and (max-width: 499px) {
+  main.divider {
+    padding: 1.25rem 0.75rem 3rem;
+  }
+
+  main.divider > .products h1 {
+    font-size: 1.6rem;
+  }
+
+  #checkout-form fieldset {
+    padding: 1rem;
+    border-radius: 10px;
+  }
+
+  #checkout-form legend {
+    font-size: 1rem;
+  }
+
+  #checkout-form input {
+    min-height: 46px;
+    font-size: 0.95rem;
+  }
+
+  #checkout-form button {
+    min-height: 50px;
+    font-size: 1rem;
+  }
+
+  .order-summary {
+    padding: 1rem;
+  }
+
+  .order-summary h2 {
+    font-size: 1.2rem;
+  }
+
+  .order-summary p {
+    font-size: 0.95rem;
+  }
+
+  #order-total {
+    font-size: 1.15rem;
+  }
+}
