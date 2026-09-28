@@ -1,16 +1,34 @@
 const baseURL = import.meta.env.VITE_SERVER_URL;
 
-function convertToJson(res) {
+
+// ============================================
+// Convert Response to JSON
+// ============================================
+
+async function convertToJson(res) {
+  const jsonResponse = await res.json();
+
   if (res.ok) {
-    return res.json();
+    return jsonResponse;
   }
 
-  throw new Error(
-    `Bad Response: ${res.status} ${res.statusText}`
-  );
+  throw {
+    name: "servicesError",
+    message: jsonResponse
+  };
 }
 
+
+// ============================================
+// External Services
+// ============================================
+
 export default class ExternalServices {
+
+  // ------------------------------------------
+  // Get products by category
+  // ------------------------------------------
+
   async getData(category) {
     const url = `${baseURL}products/search/${category}`;
 
@@ -18,12 +36,20 @@ export default class ExternalServices {
 
     const response = await fetch(url);
 
-    console.log("Response status:", response.status);
+    console.log(
+      "Response status:",
+      response.status
+    );
 
     const data = await convertToJson(response);
 
     return data.Result ?? [];
   }
+
+
+  // ------------------------------------------
+  // Get all products
+  // ------------------------------------------
 
   async getAllData() {
     const categories = [
@@ -34,34 +60,70 @@ export default class ExternalServices {
     ];
 
     const results = await Promise.all(
-      categories.map((category) => this.getData(category))
+      categories.map((category) =>
+        this.getData(category)
+      )
     );
 
     return results.flat();
   }
 
+
+  // ------------------------------------------
+  // Get one product by ID
+  // ------------------------------------------
+
   async findProductById(id) {
     const url = `${baseURL}product/${id}`;
 
+    console.log(
+      "Product URL:",
+      url
+    );
+
     const response = await fetch(url);
 
-    const data = await convertToJson(response);
+    console.log(
+      "Product response status:",
+      response.status
+    );
+
+    const data =
+      await convertToJson(response);
 
     return data.Result ?? data;
   }
+
+
+  // ------------------------------------------
+  // Submit checkout order
+  // ------------------------------------------
 
   async checkout(payload) {
     const url = `${baseURL}checkout`;
 
     const options = {
       method: "POST",
+
       headers: {
         "Content-Type": "application/json"
       },
+
       body: JSON.stringify(payload)
     };
 
-    const response = await fetch(url, options);
+    console.log(
+      "Checkout URL:",
+      url
+    );
+
+    console.log(
+      "Checkout payload:",
+      payload
+    );
+
+    const response =
+      await fetch(url, options);
 
     return convertToJson(response);
   }

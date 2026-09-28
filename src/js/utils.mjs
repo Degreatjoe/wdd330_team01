@@ -232,3 +232,44 @@ export function updateCartCount() {
     cartCount.style.display = "inline-block";
   }
 }
+
+
+// ============================================
+// Custom Alert Message
+// ============================================
+
+export function alertMessage(message, scroll = true) {
+  const alert = document.createElement("div");
+
+  alert.classList.add("alert");
+
+  alert.innerHTML = `
+    <p>${message}</p>
+
+    <button
+      type="button"
+      class="alert-close"
+      aria-label="Close alert"
+    >
+      &times;
+    </button>
+  `;
+
+  alert.addEventListener("click", function (event) {
+    if (event.target.classList.contains("alert-close")) {
+      this.remove();
+    }
+  });
+
+  const main = document.querySelector("main");
+
+  if (!main) {
+    return;
+  }
+
+  main.prepend(alert);
+
+  if (scroll) {
+    window.scrollTo(0, 0);
+  }
+}

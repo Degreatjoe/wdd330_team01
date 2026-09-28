@@ -11,10 +11,11 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Sleep Outside | Checkout</title>
+  <title>
+    Sleep Outside | Checkout
+  </title>
 
   <link rel="stylesheet" href="/css/style.css">
-  
   <link rel="stylesheet" href="/css/checkout.css">
 
   <script type="module" src="/js/checkout.js"></script>
@@ -35,7 +36,7 @@
     <section class="products">
 
       <h1>
-        Review & Place Your Order
+        Review &amp; Place Your Order
       </h1>
 
     </section>
@@ -44,6 +45,8 @@
     <section>
 
       <form id="checkout-form">
+
+        <!-- CUSTOMER INFORMATION -->
 
         <fieldset>
 
@@ -60,6 +63,7 @@
             id="fname"
             name="fname"
             type="text"
+            autocomplete="given-name"
             required
           >
 
@@ -72,11 +76,14 @@
             id="lname"
             name="lname"
             type="text"
+            autocomplete="family-name"
             required
           >
 
         </fieldset>
 
+
+        <!-- ADDRESS -->
 
         <fieldset>
 
@@ -93,6 +100,7 @@
             id="street"
             name="street"
             type="text"
+            autocomplete="street-address"
             required
           >
 
@@ -105,6 +113,7 @@
             id="city"
             name="city"
             type="text"
+            autocomplete="address-level2"
             required
           >
 
@@ -117,6 +126,7 @@
             id="state"
             name="state"
             type="text"
+            autocomplete="address-level1"
             required
           >
 
@@ -129,11 +139,15 @@
             id="zip"
             name="zip"
             type="text"
+            inputmode="numeric"
+            autocomplete="postal-code"
             required
           >
 
         </fieldset>
 
+
+        <!-- PAYMENT -->
 
         <fieldset>
 
@@ -150,6 +164,8 @@
             id="cardNumber"
             name="cardNumber"
             type="text"
+            inputmode="numeric"
+            autocomplete="cc-number"
             required
           >
 
@@ -163,6 +179,7 @@
             name="expiration"
             type="text"
             placeholder="MM/YY"
+            autocomplete="cc-exp"
             required
           >
 
@@ -175,13 +192,20 @@
             id="code"
             name="code"
             type="text"
+            inputmode="numeric"
+            autocomplete="cc-csc"
             required
           >
 
         </fieldset>
 
 
-        <button type="submit">
+        <!-- SUBMIT BUTTON -->
+
+        <button
+          id="checkoutSubmit"
+          type="submit"
+        >
           Checkout
         </button>
 
@@ -189,6 +213,8 @@
 
     </section>
 
+
+    <!-- ORDER SUMMARY -->
 
     <section class="order-summary">
 
@@ -198,7 +224,10 @@
 
 
       <p>
-        Subtotal:
+        <span>
+          Subtotal:
+        </span>
+
         <span id="subtotal">
           $0.00
         </span>
@@ -206,7 +235,10 @@
 
 
       <p>
-        Tax:
+        <span>
+          Tax:
+        </span>
+
         <span id="tax">
           $0.00
         </span>
@@ -214,7 +246,10 @@
 
 
       <p>
-        Shipping:
+        <span>
+          Shipping:
+        </span>
+
         <span id="shipping">
           $0.00
         </span>
@@ -222,7 +257,10 @@
 
 
       <p>
-        Order Total:
+        <span>
+          Order Total:
+        </span>
+
         <strong id="order-total">
           $0.00
         </strong>
@@ -231,7 +269,10 @@
     </section>
 
 
-    <p id="checkout-message"></p>
+    <p
+      id="checkout-message"
+      aria-live="polite"
+    ></p>
 
   </main>
 
