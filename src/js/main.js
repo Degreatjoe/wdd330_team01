@@ -33,6 +33,18 @@ async function init() {
       productList.renderList(true);
     });
   }
+
+  const newsletterForm = document.querySelector("#newsletter-form");
+  const newsletterMessage = document.querySelector("#newsletter-message");
+
+  newsletterForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    newsletterMessage.textContent =
+      "Thank you for signing up for our newsletter!";
+
+    newsletterForm.reset();
+  });
 }
 
 init();
