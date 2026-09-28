@@ -26,6 +26,19 @@ async function renderCartContents() {
 
   productList.innerHTML =
     htmlItems.join("");
+    const total = cartItems.reduce((acc, item) => acc + Number(item.FinalPrice), 0);
+    DisplayCartFooter(total);
+}
+
+const DisplayCartFooter = ( total) => {
+  const cartFooter = document.querySelector(".cart-footer");
+  const cartTotal = document.querySelector(".cart-total");
+
+  if (total > 0) {
+    cartFooter.classList.remove("hide");
+    cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+  }
+
 }
 
 function cartItemTemplate(item) {
