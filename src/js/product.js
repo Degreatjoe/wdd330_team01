@@ -3,7 +3,7 @@ import {
   loadHeaderFooter
 } from "./utils.mjs";
 
-import ProductData from "./ProductData.mjs";
+import ProductData from "./ExternalServices.mjs";
 import ProductDetails from "./ProductDetails.mjs";
 
 async function init() {

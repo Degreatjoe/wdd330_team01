@@ -1,4 +1,4 @@
-import ProductData from "./ProductData.mjs";
+import ExternalServices from "./ExternalServices.mjs";
 import ProductList from "./productlist.mjs";
 import {
   loadHeaderFooter,
@@ -12,16 +12,12 @@ async function init() {
 
   console.log("Category:", category);
 
-  const dataSource = new ProductData();
+  const dataSource = new ExternalServices();
 
-  const listElement = document.querySelector(
-    ".product-list"
-  );
+  const listElement = document.querySelector(".product-list");
 
   if (!listElement) {
-    console.error(
-      "Product list element was not found."
-    );
+    console.error("Product list element was not found.");
     return;
   }
 
@@ -45,9 +41,7 @@ async function init() {
 }
 
 function updateListingTitle(category) {
-  const title = document.querySelector(
-    "#listing-title"
-  );
+  const title = document.querySelector("#listing-title");
 
   if (!title) {
     return;
