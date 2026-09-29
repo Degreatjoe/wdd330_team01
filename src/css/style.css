@@ -32,7 +32,9 @@ img {
 
 header {
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  gap: 1rem;
   padding: 0.5rem;
 }
 
@@ -58,6 +60,42 @@ p {
 .logo a {
   text-decoration: none;
   color: var(--font-body);
+}
+
+.navbar-search {
+  display: flex;
+  flex: 1;
+  max-width: 32rem;
+  gap: 0.5rem;
+}
+
+.navbar-search input {
+  min-width: 0;
+  flex: 1;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--light-grey);
+  border-radius: 4px;
+  font: inherit;
+}
+
+.navbar-search button {
+  display: inline-block;
+  margin: 0;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .hero {
@@ -265,6 +303,23 @@ button {
   }
 }
 
+@media screen and (max-width: 600px) {
+  header {
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    width: auto;
+    flex: 1;
+  }
+
+  .navbar-search {
+    flex-basis: 100%;
+    order: 1;
+    max-width: none;
+  }
+}
+
 footer {
   font-size: var(--small-font);
   padding: 1em;
@@ -283,6 +338,14 @@ footer {
 #sort:focus {
   outline: none;
   border-color: #333;
+}
+
+#listing-message:empty {
+  display: none;
+}
+
+#listing-message {
+  padding: 1rem 0;
 }
 
 
@@ -422,5 +485,4 @@ footer {
     padding: 1.5rem 1rem;
   }
 }
-
 
