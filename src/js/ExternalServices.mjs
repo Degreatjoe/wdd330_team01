@@ -43,7 +43,7 @@ export default class ExternalServices {
 
     const data = await convertToJson(response);
 
-    return data.Result ?? [];
+    return Array.isArray(data.Result) ? data.Result : [];
   }
 
 
@@ -66,6 +66,28 @@ export default class ExternalServices {
     );
 
     return results.flat();
+  }
+
+  async searchProducts(query) {
+    const searchTerm = query.trim().toLowerCase();
+
+    if (!searchTerm) {
+      return [];
+    }
+
+    const products = await this.getAllData();
+
+    return products.filter((product) =>
+      [
+        product.Name,
+        product.Brand?.Name,
+        product.Category
+      ]
+        .filter((value) => typeof value === "string")
+        .some((value) =>
+          value.toLowerCase().includes(searchTerm)
+        )
+    );
   }
 
 

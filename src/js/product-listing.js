@@ -9,8 +9,12 @@ async function init() {
   await loadHeaderFooter();
 
   const category = getParam("category") || "all";
+  const searchQuery = getParam("search")?.trim();
+  const searchInput = document.querySelector("#product-search");
 
-  console.log("Category:", category);
+  if (searchInput && searchQuery) {
+    searchInput.value = searchQuery;
+  }
 
   const dataSource = new ExternalServices();
 
@@ -27,7 +31,25 @@ async function init() {
     listElement
   );
 
-  await productList.init();
+  const listingMessage = document.querySelector("#listing-message");
+
+  if (searchQuery) {
+    try {
+      productList.list = await dataSource.searchProducts(searchQuery);
+      productList.renderList(true);
+      if (listingMessage && productList.list.length === 0) {
+        listingMessage.textContent = `No products found for "${searchQuery}".`;
+      }
+    } catch (error) {
+      console.error("Could not search products.", error);
+      if (listingMessage) {
+        listingMessage.textContent =
+          "Could not load search results. Please try again.";
+      }
+    }
+  } else {
+    await productList.init();
+  }
 
   const sortElement = document.querySelector("#sort");
 
@@ -37,13 +59,18 @@ async function init() {
     });
   }
 
-  updateListingTitle(category);
+  updateListingTitle(category, searchQuery);
 }
 
-function updateListingTitle(category) {
+function updateListingTitle(category, searchQuery) {
   const title = document.querySelector("#listing-title");
 
   if (!title) {
+    return;
+  }
+
+  if (searchQuery) {
+    title.textContent = `Search results for "${searchQuery}"`;
     return;
   }
 
