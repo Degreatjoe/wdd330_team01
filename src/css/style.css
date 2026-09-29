@@ -139,6 +139,22 @@ button {
   font-weight: bold;
 }
 
+.checout-button {
+  display: inline-block;
+  background: #222;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  color: #fff;
+}
+.checkout-button a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1rem;
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+}
+
 /* End cart icon styles */
 
 .mission {
