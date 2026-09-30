@@ -1,10 +1,18 @@
 import {
+  getCartItemQuantity,
   getLocalStorage,
-  loadHeaderFooter
+  loadHeaderFooter,
+  replaceLocalStorage,
+  updateCartCount
 } from "./utils.mjs";
 
 
-function cartItemTemplate(item) {
+function cartItemTemplate(item, index) {
+  const quantity =
+    getCartItemQuantity(item);
+
+  const price =
+    Number(item.FinalPrice);
 
   return `
     <li class="cart-card divider">
@@ -38,13 +46,21 @@ function cartItemTemplate(item) {
       </p>
 
 
-      <p class="cart-card__quantity">
-        Qty: 1
-      </p>
+      <label class="cart-card__quantity">
+        Qty
+        <input
+          type="number"
+          min="1"
+          step="1"
+          value="${quantity}"
+          data-cart-index="${index}"
+          aria-label="Quantity for ${item.Name}"
+        >
+      </label>
 
 
       <p class="cart-card__price">
-        $${Number(item.FinalPrice).toFixed(2)}
+        Total: $${(price * quantity).toFixed(2)}
       </p>
 
     </li>
@@ -55,9 +71,10 @@ function cartItemTemplate(item) {
 function calculateCartTotal(items) {
 
   return items.reduce(
-    (total, item) => {
-      return total + Number(item.FinalPrice);
-    },
+    (total, item) =>
+      total +
+        Number(item.FinalPrice) *
+        getCartItemQuantity(item),
     0
   );
 
@@ -99,7 +116,9 @@ function renderCartContents() {
 
   productList.innerHTML =
     cartItems
-      .map(cartItemTemplate)
+      .map((item, index) =>
+        cartItemTemplate(item, index)
+      )
       .join("");
 
 
@@ -121,9 +140,55 @@ function renderCartContents() {
 }
 
 
+function updateCartItemQuantity(event) {
+  const input =
+    event.target.closest("[data-cart-index]");
+
+  if (!input) {
+    return;
+  }
+
+  const cartItems =
+    getLocalStorage("so-cart");
+
+  const itemIndex =
+    Number(input.dataset.cartIndex);
+
+  if (!cartItems[itemIndex]) {
+    return;
+  }
+
+  const requestedQuantity =
+    Number(input.value);
+
+  const quantity =
+    Number.isInteger(requestedQuantity) && requestedQuantity > 0
+      ? requestedQuantity
+      : 1;
+
+  cartItems[itemIndex].Quantity = quantity;
+
+  replaceLocalStorage(
+    "so-cart",
+    cartItems
+  );
+
+  updateCartCount();
+  renderCartContents();
+}
+
+
 async function init() {
 
   await loadHeaderFooter();
+
+  const productList =
+    document.querySelector(".product-list");
+
+  productList?.addEventListener(
+    "change",
+    updateCartItemQuantity
+  );
 
   renderCartContents();
 

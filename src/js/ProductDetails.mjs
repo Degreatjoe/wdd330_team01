@@ -1,5 +1,7 @@
 import {
-  setLocalStorage,
+  getCartItemQuantity,
+  getLocalStorage,
+  replaceLocalStorage,
   updateCartCount
 } from "./utils.mjs";
 
@@ -45,9 +47,27 @@ export default class ProductDetails {
   }
 
   addProductToCart() {
-    setLocalStorage(
+    const cartItems =
+      getLocalStorage("so-cart");
+
+    const existingItem =
+      cartItems.find(
+        (item) => item.Id === this.product.Id
+      );
+
+    if (existingItem) {
+      existingItem.Quantity =
+        getCartItemQuantity(existingItem) + 1;
+    } else {
+      cartItems.push({
+        ...this.product,
+        Quantity: 1
+      });
+    }
+
+    replaceLocalStorage(
       "so-cart",
-      this.product
+      cartItems
     );
 
     updateCartCount();

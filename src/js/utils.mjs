@@ -31,6 +31,25 @@ export function getLocalStorage(key) {
 }
 
 
+// Save a complete array to localStorage
+export function replaceLocalStorage(key, data) {
+  localStorage.setItem(
+    key,
+    JSON.stringify(data)
+  );
+}
+
+
+// Return a valid quantity, including for older cart entries
+export function getCartItemQuantity(item) {
+  const quantity = Number(item.Quantity ?? 1);
+
+  return Number.isInteger(quantity) && quantity > 0
+    ? quantity
+    : 1;
+}
+
+
 // Save data to localStorage
 export function setLocalStorage(key, data) {
   const dataList = getLocalStorage(key);
@@ -220,7 +239,11 @@ export function updateCartCount() {
     return;
   }
 
-  const count = cartItems.length;
+  const count = cartItems.reduce(
+    (total, item) =>
+      total + getCartItemQuantity(item),
+    0
+  );
 
   // Display the number
   cartCount.textContent = count;
