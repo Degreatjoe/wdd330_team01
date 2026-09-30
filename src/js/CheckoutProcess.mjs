@@ -1,4 +1,5 @@
 import {
+  getCartItemQuantity,
   getLocalStorage
 } from "./utils.mjs";
 
@@ -29,14 +30,12 @@ function formDataToJSON(formElement) {
 // ============================================
 
 function packageItems(items) {
-  return items.map((item) => {
-    return {
+  return items.map((item) => ({
       id: item.Id,
       name: item.Name,
       price: Number(item.FinalPrice),
-      quantity: 1
-    };
-  });
+      quantity: getCartItemQuantity(item)
+  }));
 }
 
 
@@ -91,12 +90,10 @@ export default class CheckoutProcess {
   calculateItemSubTotal() {
     this.itemTotal =
       this.list.reduce(
-        (total, item) => {
-          return (
-            total +
-            Number(item.FinalPrice)
-          );
-        },
+        (total, item) =>
+          total +
+          Number(item.FinalPrice) *
+          getCartItemQuantity(item),
         0
       );
 
@@ -119,11 +116,18 @@ export default class CheckoutProcess {
     // First item = $10
     // Each additional item = $2
 
-    if (this.list.length > 0) {
+    const itemCount =
+      this.list.reduce(
+        (total, item) =>
+          total + getCartItemQuantity(item),
+        0
+      );
+
+    if (itemCount > 0) {
 
       this.shipping =
         10 +
-        (this.list.length - 1) * 2;
+        (itemCount - 1) * 2;
 
     } else {
 

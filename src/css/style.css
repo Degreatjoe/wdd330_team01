@@ -268,7 +268,7 @@ button {
 /* Start cart list card styles */
 .cart-card {
   display: grid;
-  grid-template-columns: 25% auto 15%;
+  grid-template-columns: 25% minmax(0, 1fr) minmax(5rem, 20%);
   font-size: var(--small-font);
   /* max-height: 120px; */
   align-items: center;
@@ -296,6 +296,16 @@ button {
 .cart-card__quantity {
   grid-row: 1;
   grid-column: 3;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.cart-card__quantity input {
+  width: 3.5rem;
+  min-width: 0;
+  padding: 0.3rem;
+  font: inherit;
 }
 
 .cart-card__price {
@@ -315,7 +325,7 @@ button {
 
   .cart-card {
     font-size: inherit;
-    grid-template-columns: 150px auto 15%;
+    grid-template-columns: 150px minmax(0, 1fr) minmax(6rem, 15%);
   }
 }
 

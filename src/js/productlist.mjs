@@ -5,11 +5,11 @@ function productCardTemplate(product) {
     <li class="product-card">
       <a href="/product_pages/?products=${product.Id}">
         <img
-          src="${product.PrimaryMedium}"
+          src="${product.Images?.PrimaryMedium ?? ""}"
           srcset="
-            ${product.PrimarySmall} 400w,
-            ${product.PrimaryMedium} 800w,
-            ${product.PrimaryLarge} 1200w
+            ${product.Images?.PrimarySmall ?? ""} 400w,
+            ${product.Images?.PrimaryMedium ?? ""} 800w,
+            ${product.Images?.PrimaryLarge ?? ""} 1200w
           "
           sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw"
           alt="${product.Name}"
