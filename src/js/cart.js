@@ -15,9 +15,10 @@ function cartItemTemplate(item) {
       >
 
         <img
-          src="${item.PrimaryMedium || item.Image}"
+          src="${item.Images?.PrimaryMedium || item.Images?.PrimarySmall || ""}"
           alt="${item.Name}"
         >
+
 
       </a>
 

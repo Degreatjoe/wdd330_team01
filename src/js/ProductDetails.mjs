@@ -76,9 +76,9 @@ export default class ProductDetails {
 
     if (image) {
       image.src =
-        product.PrimaryLarge ||
-        product.Image;
-
+        product.Images?.PrimaryLarge ||
+        product.Images?.PrimaryMedium ||
+        "";
       image.alt = product.Name;
     }
 
