@@ -120,6 +120,73 @@ export default class ProductDetails {
         }`;
     }
 
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get("product");
+
+    function getComments(productId) {
+      const comments = JSON.parse(localStorage.getItem("productComments")) || [];
+
+      return comments.filter(
+        (comment) => comment.productId === productId
+      );
+    }
+
+    function displayComments(productId) {
+      const commentsList = document.querySelector("#comments-list");
+      const comments = getComments(productId);
+
+      commentsList.innerHTML = "";
+
+      if (comments.length === 0) {
+        commentsList.innerHTML = "<p>No comments yet. Be the first to comment!</p>";
+        return;
+      }
+
+      comments.forEach((comment) => {
+        const commentElement = document.createElement("article");
+
+        commentElement.classList.add("comment");
+
+        commentElement.innerHTML = `
+      <h3>${comment.name}</h3>
+      <p>${comment.text}</p>
+    `;
+
+        commentsList.appendChild(commentElement);
+      });
+    }
+
+    const commentForm = document.querySelector("#comment-form");
+
+    commentForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const name = document.querySelector("#comment-name").value;
+      const text = document.querySelector("#comment-text").value;
+
+      const comments =
+        JSON.parse(localStorage.getItem("productComments")) || [];
+
+      const newComment = {
+        productId: productId,
+        name: name,
+        text: text,
+      };
+
+      comments.push(newComment);
+
+      localStorage.setItem(
+        "productComments",
+        JSON.stringify(comments)
+      );
+
+      commentForm.reset();
+
+      displayComments(productId);
+    });
+
+    displayComments(productId);
+
     const description =
       document.getElementById("productDesc");
 

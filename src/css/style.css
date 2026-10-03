@@ -475,6 +475,43 @@ footer {
   margin-top: 1rem;
 }
 
+.comments {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 1.5rem;
+}
+
+.comments form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.comments input,
+.comments textarea {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.comments button {
+  width: fit-content;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+}
+
+.comment {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.comment h3 {
+  margin-top: 0;
+}
+
 /* ================================
    TABLET
 ================================ */
